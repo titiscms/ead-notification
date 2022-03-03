@@ -1,0 +1,54 @@
+server:
+  port: 8085
+  servlet:
+    context-path: '/ead-notification/'
+
+spring:
+  application:
+    name: ead-notification-service
+  config:
+    import: 'optional:configserver:'
+  cloud:
+    config:
+      discovery:
+        service-id: ead-config-server
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ead-notification-v2
+    username: '{cipher}AgBDrnTF3kfJi8u6PZKkjjdjRgFetamJiTvqRm1bb2Gii/WtwswjyuDFo0Tm4Ue5d8pAo3eRDyZ+yTPl08Pn4kVHab5wpmbYU8whLqT01iUj6AlsIv7/FYshlB031IwEYzg2JW6/c1MoG/HQEj7E3BMjifITQYW+aGwSrepoh2jb9gWgb1j2xA0/O3L6zpK0Y7kBbSb7YezviDe/Pc7Nq8mMqyq/dWhoX+r57muv8iWPVtNoEUt+YRpqkheX8LTh5PEdGoUf/OGcYJruPZRR507bFNFZwFW4CZygFBcmY9RQKafOcktJitKvXORo+bnSBHHXASgABqCGmDDl+BrqKkkWmCFQIK4D99HLLbNAef8jOMewZJnWZLpAiNrgpCRNnd/cqx/Teyz74uRFI2xvpQEOWVORbFUgDFXOIl6rYTuwocq6wRxyNca3BpPBU1k6JORBmUl3oEJLHz5HDWbvsd/XxVWK+nyGnm1tQExoldW7lTjmJdjbKI6XWTK9RlIgoYYyFnKXZKvYHlxXJSrUZ6+8vl1vN1ok2v26f2OC1bZWduIMELSDts2QZjh8nokDam5YNWMTCwyMhcxJlIaaTx4cWmXaWfb/kyv0Aa7JAEbKQDziCruyYu5WMsHHxD5FsByJvZDfvhTOwLycoJqd/9CMOA30ieFxrCWklx7e1fqf+TPOR4pXLlGkthQyZ72/5O+BJYhGas7Je25zat3GiVtp'
+    password: '{cipher}AgCDyCx8OYfna5ZJvVWoA+gOaM+I2ONmiWgzTPtbw30+mVe+oZsSZsc2GPQ6syuCPVXF4MnslCONR3VsQwwXBuwvjo5qlGDfugWlB+R1uYZvEIeDQMQBwcVLqdN50jMXNICNEpGlQMRxK6px/QTCvStfg25rAMZzXS2n0Rcuf5kBiuuxsPBkBj7flgK7/tgzk3ongPwy4T3eexk+viAid0bTf6Maf7gTARs6iaDKjrIzrYrDwqPthYbtwmVsUj2jAo9x6VFj5uaYW6b12PAMTdyNJZpFiYYbjrDYoYheS5oS+Bjjx1BCOBKJuxlbFvnp4ELHM/JrM1VHEoN/kO0XnQJ3MhrxaU+EHhPNPfbNv8CDA3aGS8rNU/rMWDSPdVSz0SFZMsWLQNzZJPiwaiYTVnbMUxS7gDvmOzyVUA2VqWI7YmgsPBzR8SKQfzJQUBExUORrOWgdGqWPJUObOr9++CrYNjgcChbBclmVkXM08EEifGPWBYecGbrjokN5lv0GYlrkIkW+fkm0GdkcCwbZ5FzbFnhktz7iTP3X12t3SFgQpiM/Jt6ChrXIHFEbJu0Mu8WcZvd4GBJubjelgRiDaPCKfijly9ctzm+znFOz4iq4mTJq6t3GyOCXlz+bTs2U1dYLyzO3su4CZwUecR7ehRNf315QE25rxNnAeq4Mn/5vfibNGKvS52ggHPkLmvb9cROCk3orbSlUWZORHMzYb+g5TEdwNh9pJvKcMuLYo9vVVw=='
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+      jdbc:
+        lob.non-contextual-creation: true
+  output:
+    ansi:
+      enabled: always
+  rabbitmq:
+    addresses: '{cipher}AgCO1NO/ne3lhAS1mH+q9jeN6ZIrZWdAWFk6qU4uesjr9Y7KByXhLV+U1fov16U0jVYSFl9ogcszYtpBrcFWhXOnhbLnMEZ0ahHvLcc4ThjzkyWKPMuV91+Y+oCVOELWNa1IXRdSKeKNPdMEbJVqGf3XfLMy85XNHRDlRJBohbM4kj0KH/vZxEKcBiQnWjAXZTRzXfqWp9aYS9DkRm+dxIHX2+QBEe+qH530ARocFyzzPrdNlsn3Vgt9HiQo8GMM5gZ3o43XFpAWqB4OjC4leiOKNXfGatAg9Qg/R/WsaS8ZyISwJV6urNkCS9Mpw0lAqUiGBjN/iSv8ECS01DNLv3Ji3J70Lo9J/n4qiaBjmyg0FZLaraxjziboFJ9pxNWJ7dcV9chFebsrW9G53T5Xwp2ShrKzTXZMZN4T0DSDVzafHTXuTUGI8f856OLfvQELWZAJFNXL6pFg6NS4JFr/WhF3FfFCkht/8a34o3CerGzresp7xLUe/VacQLNbN/5xh58+n8de0BJfjWa9mMaSg1RMhmC2nIZSoTi0Df+aJLYa8TyQScoEIx/CIUC8dJ/y/hqnRMGBOsmzrAogjg2xOv877BqJAL29owdGq2nwmIHdC6/Oty4uVmJQYgXnW+XRXgh+xzRQ/yVNn3AFA67/hm31gy8isZTQalo3TfzXrXrsRJS4nVfF9X6s1SzAW2R5PuLgTO0CdO7GLcB3HHvzFXK/BpIZZQVRHu082/fDNWIPGUdT0fAfT04hKBg3adVXjnluOXdqTtr9M6tGXGDV5hZ8Cdri+s3cbDkc9jLQqff37H44z8sMXaP+YV5OVk/FTtw='
+
+logging:
+  level:
+    com.ead: trace
+    root: info
+    org.springframework.web: debug
+    org.hibernate: info
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - refresh
+          - health
+
+eureka:
+  client:
+    service-url:
+      default-zone: 'http://localhost:8761/eureka'
+  instance:
+    hostname: localhost
