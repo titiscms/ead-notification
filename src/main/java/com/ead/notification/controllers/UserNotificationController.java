@@ -1,5 +1,6 @@
 package com.ead.notification.controllers;
 
+import com.ead.notification.configs.security.UserDetailsImpl;
 import com.ead.notification.dtos.NotificationDto;
 import com.ead.notification.models.NotificationModel;
 import com.ead.notification.services.NotificationService;
@@ -11,6 +12,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,13 +29,18 @@ public class UserNotificationController {
     @Autowired
     private NotificationService notificationService;
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping(path = "/users/{userId}/notifications")
     public ResponseEntity<Page<NotificationModel>> getAllNotificationsByUser(@PathVariable UUID userId,
-                                                                             @PageableDefault(page = 0, size = 10, sort = "notificationId", direction = Sort.Direction.ASC) Pageable pageable) {
+                                                                             @PageableDefault(page = 0, size = 10, sort = "notificationId", direction = Sort.Direction.ASC) Pageable pageable,
+                                                                             Authentication authentication) {
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        log.info("Authentication userId {}", userDetails.getUserId());
         Page<NotificationModel> notificationModelPage = notificationService.findAllNotificationsByUser(userId, pageable);
         return ResponseEntity.status(HttpStatus.OK).body(notificationModelPage);
     }
 
+    @PreAuthorize("hasAnyRole('STUDENT')")
     @PutMapping(path = "/users/{userId}/notifications/{notificationId}")
     public ResponseEntity<Object> updateNotification(@PathVariable UUID userId, @PathVariable UUID notificationId, @RequestBody @Valid NotificationDto notificationDto) {
         Optional<NotificationModel> notificationModelOptional = notificationService.findByNotificationIdAndUserId(notificationId, userId);
